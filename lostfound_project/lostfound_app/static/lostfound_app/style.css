@@ -1,0 +1,14 @@
+:root{--bg:#0f172a;--card:#111827;--muted:#94a3b8;--fg:#e5e7eb;--accent:#22c55e;--danger:#ef4444;}
+html,body{height:100%}
+body{background:linear-gradient(180deg,#0b1220,#0f172a);color:var(--fg);}
+.navbar{background:linear-gradient(90deg,#111827,#0b1220)!important;border-bottom:1px solid #1f2937}
+.container{max-width:980px}
+.card{background:linear-gradient(180deg,#0f172a,#0b1220);border:1px solid #1f2937;color:var(--fg);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.card img{border-radius:.5rem;border:1px solid #1f2937}
+.btn-primary{background:linear-gradient(90deg,#22c55e,#16a34a);border:0}
+.btn-success{background:linear-gradient(90deg,#22c55e,#16a34a);border:0}
+.btn-secondary{background:#334155;border:0}
+.badge.bg-secondary{background:#475569}
+.form-control, input, textarea, select{background:#0b1220!important;border:1px solid #1f2937!important;color:var(--fg)!important}
+.alert{border:1px solid #1f2937}
+.footer{color:var(--muted);border-top:1px solid #1f2937}
