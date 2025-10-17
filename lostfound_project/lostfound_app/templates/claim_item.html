@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Claim Item: {{ item.title }}</h2>
+<p><b>Description:</b> {{ item.description }}</p>
+<p><b>Location:</b> {{ item.location }}</p>
+{% if item.image %}
+  <img src="{{ item.image.url }}" class="img-thumbnail mb-3" style="max-width:300px;"/>
+{% endif %}
+<hr>
+<form method="post" class="mt-3">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-success">Submit Claim</button>
+  <a class="btn btn-secondary" href="{% url 'home' %}">Back</a>
+</form>
+{% endblock %}

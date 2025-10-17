@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Post Lost Item</h2>
+<form method="post" enctype="multipart/form-data" class="mt-3">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <a class="btn btn-secondary" href="{% url 'home' %}">Cancel</a>
+</form>
+{% endblock %}
