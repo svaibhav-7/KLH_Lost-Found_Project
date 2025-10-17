@@ -40,6 +40,9 @@ if not DEBUG:
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_BROWSER_XSS_FILTER = True
     X_FRAME_OPTIONS = 'DENY'
+else:
+    # In development, ensure HTTPS redirect is disabled
+    SECURE_SSL_REDIRECT = False
 
 # Authentication backends
 AUTHENTICATION_BACKENDS = [
@@ -90,6 +93,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'lostfound_app.middleware.RestrictEmailToKLHDomain',
 ]
 
