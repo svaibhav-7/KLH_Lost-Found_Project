@@ -1,19 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Lost & Found Posts</h2>
-<a href="{% url 'post_item' %}" class="btn btn-primary">Post Lost Item</a>
-<hr>
-{% for item in items %}
-  <div class="card mt-3">
-    <img src="{{ item.image.url }}" width="200px">
-    <h4>{{ item.title }}</h4>
-    <p>{{ item.description }}</p>
-    <p><b>Location:</b> {{ item.location }}</p>
-    {% if not item.found %}
-      <a href="{% url 'claim_item' item.id %}" class="btn btn-success">Claim</a>
-    {% else %}
-      <span class="badge bg-secondary">Claimed</span>
-    {% endif %}
+<div class="hero fade-up visible">
+  <div>
+    <h1>KLH Lost & Found</h1>
+    <p class="muted">Browse items reported lost on campus or post a new one.</p>
   </div>
-{% endfor %}
+  <div class="ms-auto">
+    <a href="{% url 'post_item' %}" class="btn btn-primary">Post Lost Item</a>
+  </div>
+  </div>
+
+<div class="items-grid">
+  {% for item in items %}
+    <div class="card">
+      {% if item.image %}
+        <img class="card-img-top" src="{{ item.image.url }}" alt="{{ item.title }}"/>
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title mb-2">{{ item.title }}</h5>
+        <p class="card-text muted">{{ item.description }}</p>
+        <div class="item-meta mb-3">
+          <span><strong>Location:</strong> {{ item.location }}</span>
+          <span><strong>Posted:</strong> {{ item.date_posted|date:'M d, Y H:i' }}</span>
+        </div>
+        {% if not item.found %}
+          <a href="{% url 'claim_item' item.id %}" class="btn btn-primary">Claim</a>
+        {% else %}
+          <span class="badge">Claimed</span>
+        {% endif %}
+      </div>
+    </div>
+  {% empty %}
+    <div class="alert alert-secondary">No items yet. Be the first to post one.</div>
+  {% endfor %}
+</div>
 {% endblock %}

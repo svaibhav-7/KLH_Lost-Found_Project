@@ -1,10 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Post Lost Item</h2>
-<form method="post" enctype="multipart/form-data" class="mt-3">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">Submit</button>
-  <a class="btn btn-secondary" href="{% url 'home' %}">Cancel</a>
-</form>
+<div class="hero fade-up visible mb-3">
+  <div>
+    <h1>Post a Lost Item</h1>
+    <p class="muted">Provide details and a photo to help others identify it.</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <form method="post" enctype="multipart/form-data" class="mt-2">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="mt-3 d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-outline-light" href="{% url 'home' %}">Cancel</a>
+      </div>
+    </form>
+  </div>
+  </div>
 {% endblock %}
