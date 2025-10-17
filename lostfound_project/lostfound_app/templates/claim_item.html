@@ -21,6 +21,11 @@
         <div class="item-meta mb-3">
           <span><strong>Location:</strong> {{ item.location }}</span>
           <span><strong>Posted:</strong> {{ item.date_posted|date:'M d, Y H:i' }}</span>
+          <span><strong>Posted by:</strong> {{ item.posted_by.get_full_name|default:item.posted_by.username }}</span>
+          {% if item.found and item.claim_set.exists %}
+            <span><strong>Claimed by:</strong> {{ item.claim_set.last.claimed_by.get_full_name|default:item.claim_set.last.claimed_by.username }}</span>
+            <span><strong>Claimed on:</strong> {{ item.claim_set.last.claimed_on|date:'M d, Y H:i' }}</span>
+          {% endif %}
         </div>
 
         <form method="post" class="mt-2">

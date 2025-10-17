@@ -20,13 +20,20 @@ def restrict_klh_email(get_response):
 # lostfound_app/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import LostItem
+from django.db.models import Q
 from .forms import LostItemForm, ClaimForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login as auth_login, authenticate
 
 def home(request):
-    items = LostItem.objects.all().order_by('-date_posted')
+    if request.user.is_authenticated:
+        items = LostItem.objects.filter(
+            Q(found=False) |
+            Q(found=True, posted_by=request.user)
+        ).order_by('-date_posted')
+    else:
+        items = LostItem.objects.filter(found=False).order_by('-date_posted')
     return render(request, 'home.html', {'items': items})
 
 @login_required
@@ -77,6 +84,7 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
+
 # Explicit signup view
 def signup_view(request):
     if request.user.is_authenticated:
@@ -93,3 +101,15 @@ def signup_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+# Delete claimed item (only by poster)
+from django.contrib.auth.decorators import login_required
+@login_required
+def delete_claimed_item(request, pk):
+    item = get_object_or_404(LostItem, pk=pk)
+    if item.posted_by != request.user:
+        return redirect('home')
+    if request.method == 'POST':
+        item.delete()
+        return redirect('home')
+    return render(request, 'confirm_delete.html', {'item': item})
